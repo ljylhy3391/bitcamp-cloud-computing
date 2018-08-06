@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 @WebServlet("/member/add")
 public class MemberAddServlet extends HttpServlet {
-    
     @Override
     protected void doPost(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
@@ -40,7 +39,8 @@ public class MemberAddServlet extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             try (
                 Connection con = DriverManager.getConnection(
-                        "jdbc:mysql://13.124.113.25:3306/studydb","study","1111");
+                        "jdbc:mysql://13.125.253.74:3306/studydb",
+                        "study", "1111");
                 PreparedStatement stmt = con.prepareStatement(
                     "insert into pms2_member(mid,email,pwd) values(?,?,password(?))");) {
                 
@@ -48,9 +48,10 @@ public class MemberAddServlet extends HttpServlet {
                 stmt.setString(2, request.getParameter("email"));
                 stmt.setString(3, request.getParameter("password"));
             
-                 stmt.executeUpdate();
+                stmt.executeUpdate();
+                
+                out.println("<p>등록 성공!</p>");
             }
-            out.println("<p>등록 성공!</p>");
         } catch (Exception e) {
             out.println("<p>등록 실패!</p>");
             e.printStackTrace(out);
@@ -58,5 +59,13 @@ public class MemberAddServlet extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
     }
-
 }
+
+
+
+
+
+
+
+
+

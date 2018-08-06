@@ -14,15 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 @WebServlet("/member/delete")
-public class MemberDeleteServlet extends HttpServlet{
-    
-    
+public class MemberDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-        
-        String id = request.getParameter("id");
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -41,19 +37,20 @@ public class MemberDeleteServlet extends HttpServlet{
             Class.forName("com.mysql.jdbc.Driver");
             try (
                 Connection con = DriverManager.getConnection(
-                        "jdbc:mysql://13.124.113.25:3306/studydb","study","1111");
+                        "jdbc:mysql://13.125.253.74:3306/studydb",
+                        "study", "1111");
                 PreparedStatement stmt = con.prepareStatement(
                     "delete from pms2_member where mid=?");) {
                 
                 stmt.setString(1, request.getParameter("id"));
+                
+                if (stmt.executeUpdate() == 0) {
+                    out.println("<p>해당 회원이 없습니다.</p>");
+                } else {
+                    out.println("<p>삭제하였습니다.</p>");
+                }
+            } 
     
-            if (stmt.executeUpdate() == 0) {
-                out.println("<p>해당 회원이 없습니다.</p>");
-            } else {
-                out.println("<p>삭제하였습니다.</p>");
-            }
-            }
-            
         } catch (Exception e) {
             out.println("<p>삭제 실패!</p>");
             e.printStackTrace(out);
@@ -61,5 +58,11 @@ public class MemberDeleteServlet extends HttpServlet{
         out.println("</body>");
         out.println("</html>");
     }
-
 }
+
+
+
+
+
+
+
