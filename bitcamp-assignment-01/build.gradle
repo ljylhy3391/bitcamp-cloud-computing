@@ -1,0 +1,20 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building an application
+    id 'eclipse-wtp'
+
+    id 'war'
+}
+
+
+
+dependencies {
+
+}
+
+repositories {
+    
+    jcenter()
+}
